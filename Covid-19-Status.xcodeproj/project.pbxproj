@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -52,6 +52,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5011B25D26A770E90081496B /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		5011B25E26A770F40081496B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5011B26026A771050081496B /* Realm */,
+				5011B25F26A770FD0081496B /* Network */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5011B25F26A770FD0081496B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5011B26026A771050081496B /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		507CC20126A76481001A809A = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +103,8 @@
 		507CC20C26A76481001A809A /* Covid-19-Status */ = {
 			isa = PBXGroup;
 			children = (
+				5011B25E26A770F40081496B /* Services */,
+				5011B25D26A770E90081496B /* Base */,
 				507CC20D26A76481001A809A /* AppDelegate.swift */,
 				507CC20F26A76481001A809A /* SceneDelegate.swift */,
 				507CC21126A76481001A809A /* ViewController.swift */,
@@ -91,7 +123,6 @@
 				C473BBDC9DEFCE6E4DBF4A39 /* Pods-Covid-19-Status.debug.xcconfig */,
 				7990310A82F7699060218BE8 /* Pods-Covid-19-Status.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
