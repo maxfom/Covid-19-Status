@@ -14,6 +14,13 @@
 		507CC21826A76481001A809A /* Covid_19_Status.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 507CC21626A76481001A809A /* Covid_19_Status.xcdatamodeld */; };
 		507CC21A26A76484001A809A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 507CC21926A76484001A809A /* Assets.xcassets */; };
 		507CC21D26A76484001A809A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 507CC21B26A76484001A809A /* LaunchScreen.storyboard */; };
+		50F0F44826ACBD5000CBCC74 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44726ACBD5000CBCC74 /* BaseTableViewController.swift */; };
+		50F0F44A26ACBD7800CBCC74 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44926ACBD7800CBCC74 /* BaseViewController.swift */; };
+		50F0F44C26ACBE0100CBCC74 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44B26ACBE0100CBCC74 /* CountriesViewController.swift */; };
+		50F0F44E26ACBE4400CBCC74 /* CountryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44D26ACBE4400CBCC74 /* CountryItem.swift */; };
+		50F0F45026ACBF0B00CBCC74 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44F26ACBF0B00CBCC74 /* RealmService.swift */; };
+		50F0F45226ACC08900CBCC74 /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F45126ACC08900CBCC74 /* CountryTableViewCell.swift */; };
+		50F0F45426ACC6A300CBCC74 /* CovidStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F45326ACC6A300CBCC74 /* CovidStatusViewController.swift */; };
 		B01E16755E0BBB4A69A7E77D /* Pods_Covid_19_Status.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66832F73F6BBF40B9147D953 /* Pods_Covid_19_Status.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +34,13 @@
 		507CC21926A76484001A809A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		507CC21C26A76484001A809A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		507CC21E26A76484001A809A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50F0F44726ACBD5000CBCC74 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
+		50F0F44926ACBD7800CBCC74 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		50F0F44B26ACBE0100CBCC74 /* CountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
+		50F0F44D26ACBE4400CBCC74 /* CountryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryItem.swift; sourceTree = "<group>"; };
+		50F0F44F26ACBF0B00CBCC74 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
+		50F0F45126ACC08900CBCC74 /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
+		50F0F45326ACC6A300CBCC74 /* CovidStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidStatusViewController.swift; sourceTree = "<group>"; };
 		66832F73F6BBF40B9147D953 /* Pods_Covid_19_Status.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Covid_19_Status.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7990310A82F7699060218BE8 /* Pods-Covid-19-Status.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Covid-19-Status.release.xcconfig"; path = "Target Support Files/Pods-Covid-19-Status/Pods-Covid-19-Status.release.xcconfig"; sourceTree = "<group>"; };
 		C473BBDC9DEFCE6E4DBF4A39 /* Pods-Covid-19-Status.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Covid-19-Status.debug.xcconfig"; path = "Target Support Files/Pods-Covid-19-Status/Pods-Covid-19-Status.debug.xcconfig"; sourceTree = "<group>"; };
@@ -55,6 +69,8 @@
 		5011B25D26A770E90081496B /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				50F0F44726ACBD5000CBCC74 /* BaseTableViewController.swift */,
+				50F0F44926ACBD7800CBCC74 /* BaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -78,6 +94,7 @@
 		5011B26026A771050081496B /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				50F0F44F26ACBF0B00CBCC74 /* RealmService.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -107,12 +124,16 @@
 				5011B25D26A770E90081496B /* Base */,
 				507CC20D26A76481001A809A /* AppDelegate.swift */,
 				507CC20F26A76481001A809A /* SceneDelegate.swift */,
+				50F0F44B26ACBE0100CBCC74 /* CountriesViewController.swift */,
 				507CC21126A76481001A809A /* ViewController.swift */,
+				50F0F44D26ACBE4400CBCC74 /* CountryItem.swift */,
 				507CC21326A76481001A809A /* Main.storyboard */,
 				507CC21926A76484001A809A /* Assets.xcassets */,
 				507CC21B26A76484001A809A /* LaunchScreen.storyboard */,
 				507CC21E26A76484001A809A /* Info.plist */,
 				507CC21626A76481001A809A /* Covid_19_Status.xcdatamodeld */,
+				50F0F45126ACC08900CBCC74 /* CountryTableViewCell.swift */,
+				50F0F45326ACC6A300CBCC74 /* CovidStatusViewController.swift */,
 			);
 			path = "Covid-19-Status";
 			sourceTree = "<group>";
@@ -241,9 +262,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				507CC21226A76481001A809A /* ViewController.swift in Sources */,
+				50F0F44C26ACBE0100CBCC74 /* CountriesViewController.swift in Sources */,
 				507CC21826A76481001A809A /* Covid_19_Status.xcdatamodeld in Sources */,
+				50F0F44826ACBD5000CBCC74 /* BaseTableViewController.swift in Sources */,
+				50F0F45226ACC08900CBCC74 /* CountryTableViewCell.swift in Sources */,
+				50F0F45426ACC6A300CBCC74 /* CovidStatusViewController.swift in Sources */,
+				50F0F45026ACBF0B00CBCC74 /* RealmService.swift in Sources */,
 				507CC20E26A76481001A809A /* AppDelegate.swift in Sources */,
 				507CC21026A76481001A809A /* SceneDelegate.swift in Sources */,
+				50F0F44A26ACBD7800CBCC74 /* BaseViewController.swift in Sources */,
+				50F0F44E26ACBE4400CBCC74 /* CountryItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
