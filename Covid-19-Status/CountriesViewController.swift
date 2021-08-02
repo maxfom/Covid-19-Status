@@ -29,7 +29,7 @@ class CountriesViewController: BaseTableViewController {
     
     var items: Results<CountryItem> = RealmService.getCountries()
     private var token: NotificationToken?
-    //private let weatherService = WeatherService()
+    private let countryService = CountryService()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -68,7 +68,8 @@ class CountriesViewController: BaseTableViewController {
         token?.invalidate()
     }
     
-    @IBAction func addNewCountryItem() {
+
+    @IBAction func addNewCountryItem(_ sender: Any) {
         showAlert(
             title: Spec.NewItemAlert.title,
             message: Spec.NewItemAlert.message,
@@ -91,7 +92,7 @@ class CountriesViewController: BaseTableViewController {
     }
     
     func getCountry(country: String, completion: @escaping (CountryItem?) -> Void) {
-        weatherService.getCountry(country: country) { [weak self] result in
+        countryService.getCountry(country: country) { [weak self] result in
            switch result {
            case .success(let country):
                completion(country)
@@ -102,7 +103,7 @@ class CountriesViewController: BaseTableViewController {
            }
        }
     }
-    
+
 }
 
     
@@ -121,7 +122,7 @@ extension CountriesViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: CountryTableViewCell.cellIdentifier, for: indexPath) as? CountryTableViewCell {
             let item = items[indexPath.row]
-            cell.configure(title: item.title)
+            cell.configure(title: item.country)
             return cell
         }
         
@@ -130,7 +131,7 @@ extension CountriesViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
-        let country = items[indexPath.row].title
+        let country = items[indexPath.row].country
         guard let vc = storyboard?.instantiateViewController(identifier: "CovidStatusViewController") as? CovidStatusViewController else { return }
         vc.configure(country: country)
         show(vc, sender: self)

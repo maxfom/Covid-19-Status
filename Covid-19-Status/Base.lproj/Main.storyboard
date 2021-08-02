@@ -11,7 +11,7 @@
         <!--Countries-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CountriesViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,13 +60,12 @@
                     <navigationItem key="navigationItem" title="Countries" id="4lQ-RS-ovY">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="MQh-ox-yxk">
                             <connections>
-                                <action selector="addNewCountryItem:" destination="flK-w7-k5u" id="mfF-3M-f8M"/>
+                                <action selector="addNewCountryItem:" destination="BYZ-38-t0r" id="ZYj-wT-ySF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <exit id="flK-w7-k5u" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="928.98550724637687" y="79.6875"/>
         </scene>

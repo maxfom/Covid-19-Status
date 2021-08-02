@@ -12,15 +12,15 @@ import RealmSwift
 class CovidStatusViewController: BaseTableViewController {
 
     private var country: String = ""
-    //private var weather: WeatherData?
     private var token: NotificationToken?
-    private var forecastToken: NotificationToken?
-    //private var forecast: List<WeatherData>?
-    //private let weatherService = WeatherService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+ 
     
+    func configure(country: String) {
+        self.country = country
+    }
     
 }

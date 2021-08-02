@@ -10,21 +10,19 @@ import RealmSwift
 
 class CountryItem: Object {
     
-    @objc dynamic var title: String = ""
-    @objc dynamic var lat: Double = 0
-    @objc dynamic var lng: Double = 0
-    //@objc dynamic var currentWeather: WeatherData?
-    //let forecast = List<WeatherData>()
+    @objc dynamic var country: String = ""
+    @objc dynamic var slug: String = ""
+    @objc dynamic var is02: String = ""
     
     override class func primaryKey() -> String? {
-        return "title"
+        return "country"
     }
     
-    convenience init(title: String, lat: Double, lng: Double) {
+    convenience init(country: String, slug: String, is02: String) {
         self.init()
-        self.title = title
-        self.lat = lat
-        self.lng = lng
+        self.country = country
+        self.slug = slug
+        self.is02 = is02
     }
     
 }
