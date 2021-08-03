@@ -38,13 +38,13 @@ class CountryService {
     }
     
     @discardableResult
-    func getCountry(country: String, completion: @escaping (Result<CountryItem, Error>) -> Void) -> URLSessionDataTask? {
+    func getCountries(completion: @escaping (Result<[CountryItem], Error>) -> Void) -> URLSessionDataTask? {
         let task = sendRequest(endpoint: .allCountries) { result in
             switch result {
             case .success(let json):
                 do {
-                    let country = try CountryParser().parseCountry(json: json)
-                    completion(.success(country))
+                    let countries = try CountryParser().parseCountries(json: json)
+                    completion(.success(countries))
                 } catch {
                     completion(.failure(error))
                 }

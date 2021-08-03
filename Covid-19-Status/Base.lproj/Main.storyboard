@@ -11,7 +11,7 @@
         <!--Countries-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CountriesViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="FavoriteCountriesViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -57,13 +57,10 @@
                             <constraint firstItem="DBt-yp-cXb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fo6-U2-YUf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Countries" id="4lQ-RS-ovY">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="MQh-ox-yxk">
-                            <connections>
-                                <action selector="addNewCountryItem:" destination="BYZ-38-t0r" id="ZYj-wT-ySF"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Countries" id="4lQ-RS-ovY"/>
+                    <connections>
+                        <outlet property="tableView" destination="DBt-yp-cXb" id="AIh-Mf-m0e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -87,9 +84,66 @@
             </objects>
             <point key="canvasLocation" x="18.840579710144929" y="79.6875"/>
         </scene>
+        <!--Countries-->
+        <scene sceneID="mwy-JP-8ot">
+            <objects>
+                <viewController storyboardIdentifier="Countries" id="Fl8-aL-5rj" customClass="CountriesViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xp5-2F-8Mg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aVM-Ww-dAK">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CountryTableViewCell" id="kTD-eP-6EU" customClass="CountryTableViewCell" customModule="Covid_19_Status" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kTD-eP-6EU" id="BZI-mX-NHR">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2J-Le-Vps">
+                                                    <rect key="frame" x="20" y="11" width="394" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Y2J-Le-Vps" secondAttribute="trailing" id="GD8-IK-JZE"/>
+                                                <constraint firstItem="Y2J-Le-Vps" firstAttribute="leading" secondItem="BZI-mX-NHR" secondAttribute="leading" constant="20" symbolic="YES" id="MgE-Tq-ZAA"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Y2J-Le-Vps" secondAttribute="bottom" id="NOa-Ai-shc"/>
+                                                <constraint firstItem="Y2J-Le-Vps" firstAttribute="top" secondItem="BZI-mX-NHR" secondAttribute="topMargin" id="TcK-G9-NeP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="Y2J-Le-Vps" id="GrL-rS-VjF"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ny3-7U-iHx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aVM-Ww-dAK" firstAttribute="trailing" secondItem="Ny3-7U-iHx" secondAttribute="trailing" id="Mel-z5-ffX"/>
+                            <constraint firstAttribute="bottom" secondItem="aVM-Ww-dAK" secondAttribute="bottom" id="bdL-01-rfO"/>
+                            <constraint firstItem="aVM-Ww-dAK" firstAttribute="top" secondItem="Ny3-7U-iHx" secondAttribute="top" id="dIA-ZA-Axz"/>
+                            <constraint firstItem="aVM-Ww-dAK" firstAttribute="leading" secondItem="Ny3-7U-iHx" secondAttribute="leading" id="gIY-H8-WEt"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Countries" id="O72-WQ-lES"/>
+                    <connections>
+                        <outlet property="tableView" destination="aVM-Ww-dAK" id="AiD-SX-PSY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7TC-wK-dtK" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1681" y="80"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

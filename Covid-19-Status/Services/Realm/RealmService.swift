@@ -10,10 +10,10 @@ import RealmSwift
 
 class RealmService {
     
-    static func saveCountry(country: CountryItem) {
+    static func saveCountries(countries: [CountryItem]) {
         let realm = try! Realm()
         try? realm.write {
-            realm.add(country, update: .all)
+            realm.add(countries, update: .modified)
         }
     }
     
@@ -22,10 +22,32 @@ class RealmService {
         return realm.objects(CountryItem.self).sorted(byKeyPath: "country")
     }
     
-    static func removeCountry(_ country: CountryItem) {
+    static func removeAllCountries() {
         let realm = try! Realm()
         try? realm.write {
-            realm.delete(country)
+            realm.delete(realm.objects(CountryItem.self))
+        }
+    }
+    
+    static func getFavoriteCountries() -> Results<CountryItem> {
+        let realm = try! Realm()
+        let countries = realm.objects(CountryItem.self).filter("isFavorite == true").sorted(byKeyPath: "country")
+        return countries
+    }
+    
+    static func addFavoriteCountry(slug: String) {
+        let realm = try! Realm()
+        guard let country = realm.object(ofType: CountryItem.self, forPrimaryKey: slug) else { return }
+        try? realm.write {
+            country.isFavorite = true
+        }
+    }
+    
+    static func removeFavoriteCountry(slug: String) {
+        let realm = try! Realm()
+        guard let country = realm.object(ofType: CountryItem.self, forPrimaryKey: slug) else { return }
+        try? realm.write {
+            country.isFavorite = false
         }
     }
     

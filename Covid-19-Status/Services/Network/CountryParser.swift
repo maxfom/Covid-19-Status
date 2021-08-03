@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
 enum CountryParsingError: Error {
     case invalidURL
@@ -15,18 +16,22 @@ enum CountryParsingError: Error {
 
 class CountryParser {
     
-    func parseCountry(json: JSON) throws -> CountryItem {
-        guard let country = json["Country"].string,
-              let slug = json["Slug"].string,
-              let is02 = json["ISO2"].string
-        else {
-            throw CountryParsingError.invalidJSON
+    func parseCountries(json: JSON) throws -> [CountryItem] {
+        let favoriteSlugs = RealmService.getFavoriteCountries().map { $0.slug }
+        return try json.arrayValue.compactMap { value in
+            guard let country = value["Country"].string,
+                  let slug = value["Slug"].string,
+                  let is02 = value["ISO2"].string
+            else {
+                throw CountryParsingError.invalidJSON
+            }
+            return CountryItem(
+                country: country,
+                slug: slug,
+                is02: is02,
+                isFavorite: favoriteSlugs.contains(slug)
+            )
         }
-        return CountryItem(
-            country: country,
-            slug: slug,
-            is02: is02
-        )
     }
     
 }
