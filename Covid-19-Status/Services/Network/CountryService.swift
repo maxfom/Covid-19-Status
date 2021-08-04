@@ -14,11 +14,25 @@ class CountryService {
     
     private enum Spec {
         static let scheme = "https"
-        static let host = "api.covid19api.com"    }
+        static let host = "api.covid19api.com"
+        static let period = "2020"
+    }
     
     enum Endpoint: String {
         case allCountries = "/countries"
+        case statsOfCountry = "/country"
     }
+    
+    
+    func defaultParameters() -> [String: String] {
+        [
+            "period": Spec.period,
+        ]
+    }
+    
+    // https://api.covid19api.com/country/south-africa?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z
+    
+    
     
     
     @discardableResult
@@ -36,6 +50,28 @@ class CountryService {
         task.resume()
         return task
     }
+    
+    
+    @discardableResult
+    func sendRequestForCountryStats(endpoint: Endpoint, parameters: [String: String], completion: @escaping (Result<JSON, Error>) -> Void) -> URLSessionDataTask? {
+        var components = URLComponents()
+        components.scheme = Spec.scheme
+        components.host = Spec.host
+        components.path = endpoint.rawValue
+        let parametersDict = defaultParameters().merging(parameters) { (_, new) in new }
+        components.queryItems = parametersDict.map { key, value in
+            URLQueryItem(name: key, value: value)
+        }
+        guard let url = components.url else {
+            completion(.failure(CountryParsingError.invalidURL))
+            return nil
+        }
+        let request = URLRequest(url: url)
+        let task = networkService.sendRequest(request: request, completion: completion)
+        task.resume()
+        return task
+    }
+    
     
     @discardableResult
     func getCountries(completion: @escaping (Result<[CountryItem], Error>) -> Void) -> URLSessionDataTask? {

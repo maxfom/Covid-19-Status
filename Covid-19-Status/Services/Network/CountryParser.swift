@@ -34,4 +34,21 @@ class CountryParser {
         }
     }
     
+    
+    func parseStatsForCurrentCountry(json: JSON, country: String) throws -> StatsCountryItem {
+        guard let confirmed = json["Confirmed"].string,
+                let deaths = json["Deaths"].string,
+                let recovered = json["Recovered"].string,
+                let country = json["Country"].string
+        else {
+            throw CountryParsingError.invalidJSON
+        }
+        return StatsCountryItem(
+            confirmed: confirmed,
+            deaths: deaths,
+            recovered: recovered,
+            country: country
+        )
+    }
+    
 }

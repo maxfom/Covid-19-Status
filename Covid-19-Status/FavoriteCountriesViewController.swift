@@ -77,6 +77,21 @@ class FavoriteCountriesViewController: BaseTableViewController {
         }
     }
     
+    func getCountries(completion: @escaping ([CountryItem]?) -> Void) {
+        countryService.getCountries() { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let countries):
+                    completion(countries)
+                    
+                case .failure(let error):
+                    completion(nil)
+                    self?.showAlert(title: "Error", message: error.localizedDescription, cancelButton: "OK")
+                }
+            }
+        }
+    }
+    
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource

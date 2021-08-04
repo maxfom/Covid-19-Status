@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5076777F26BB22FF00E4EF9A /* StatsCountryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076777E26BB22FF00E4EF9A /* StatsCountryItem.swift */; };
 		507CC20E26A76481001A809A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CC20D26A76481001A809A /* AppDelegate.swift */; };
 		507CC21026A76481001A809A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CC20F26A76481001A809A /* SceneDelegate.swift */; };
 		507CC21526A76481001A809A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 507CC21326A76481001A809A /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5076777E26BB22FF00E4EF9A /* StatsCountryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsCountryItem.swift; sourceTree = "<group>"; };
 		507CC20A26A76481001A809A /* Covid-19-Status.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Covid-19-Status.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507CC20D26A76481001A809A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		507CC20F26A76481001A809A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				50F0F44B26ACBE0100CBCC74 /* CountriesViewController.swift */,
 				9B29A8EC26B92729007561A8 /* FavoriteCountriesViewController.swift */,
 				50F0F44D26ACBE4400CBCC74 /* CountryItem.swift */,
+				5076777E26BB22FF00E4EF9A /* StatsCountryItem.swift */,
 				507CC21326A76481001A809A /* Main.storyboard */,
 				507CC21926A76484001A809A /* Assets.xcassets */,
 				507CC21B26A76484001A809A /* LaunchScreen.storyboard */,
@@ -274,6 +277,7 @@
 				507CC21826A76481001A809A /* Covid_19_Status.xcdatamodeld in Sources */,
 				50F0F44826ACBD5000CBCC74 /* BaseTableViewController.swift in Sources */,
 				50F0F45626B8163600CBCC74 /* CountryService.swift in Sources */,
+				5076777F26BB22FF00E4EF9A /* StatsCountryItem.swift in Sources */,
 				50F0F45226ACC08900CBCC74 /* CountryTableViewCell.swift in Sources */,
 				50F0F45426ACC6A300CBCC74 /* CovidStatusViewController.swift in Sources */,
 				50F0F45026ACBF0B00CBCC74 /* RealmService.swift in Sources */,
