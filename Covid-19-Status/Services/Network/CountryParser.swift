@@ -35,7 +35,8 @@ class CountryParser {
     }
     
     
-    func parseStatsForCurrentCountry(json: JSON, country: String) throws -> StatsCountryItem {
+    func parseStatsForCurrentCountry(json: JSON, country: String) throws -> [StatsCountryItem] {
+        return try json.arrayValue.compactMap {value in
         guard let confirmed = json["Confirmed"].string,
                 let deaths = json["Deaths"].string,
                 let recovered = json["Recovered"].string,
@@ -50,5 +51,5 @@ class CountryParser {
             country: country
         )
     }
-    
+    }
 }
