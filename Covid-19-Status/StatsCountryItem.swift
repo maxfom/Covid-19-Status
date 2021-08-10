@@ -16,6 +16,10 @@ class StatsCountryItem: Object {
     @objc dynamic var countryData: StatsCountryItem?
     @objc dynamic var country: String = ""
     
+    override class func primaryKey() -> String? {
+        return "country"
+    }
+    
     convenience init(
         confirmed: String,
         deaths: String,

@@ -51,10 +51,10 @@ class RealmService {
         }
     }
     
-    static func getStatsOfCountry() -> Results<StatsCountryItem> {
+    static func getStatsOfCountry(for country: String) -> StatsCountryItem? {
         let realm = try! Realm()
-        let stats = realm.objects(StatsCountryItem.self)
-        return stats
+        guard let country = realm.object(ofType: CountryItem.self, forPrimaryKey: country) else { return nil }
+        return country.currentStats
     }
     
     static func saveStatsOfCountry(_ stats: StatsCountryItem, to country: String) {

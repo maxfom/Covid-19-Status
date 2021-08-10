@@ -14,6 +14,7 @@
 		507CC21826A76481001A809A /* Covid_19_Status.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 507CC21626A76481001A809A /* Covid_19_Status.xcdatamodeld */; };
 		507CC21A26A76484001A809A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 507CC21926A76484001A809A /* Assets.xcassets */; };
 		507CC21D26A76484001A809A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 507CC21B26A76484001A809A /* LaunchScreen.storyboard */; };
+		50E909C726C3133E004BEB79 /* CovidStatusViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E909C626C3133E004BEB79 /* CovidStatusViewCell.swift */; };
 		50F0F44826ACBD5000CBCC74 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44726ACBD5000CBCC74 /* BaseTableViewController.swift */; };
 		50F0F44A26ACBD7800CBCC74 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44926ACBD7800CBCC74 /* BaseViewController.swift */; };
 		50F0F44C26ACBE0100CBCC74 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0F44B26ACBE0100CBCC74 /* CountriesViewController.swift */; };
@@ -38,6 +39,7 @@
 		507CC21926A76484001A809A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		507CC21C26A76484001A809A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		507CC21E26A76484001A809A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50E909C626C3133E004BEB79 /* CovidStatusViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidStatusViewCell.swift; sourceTree = "<group>"; };
 		50F0F44726ACBD5000CBCC74 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		50F0F44926ACBD7800CBCC74 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		50F0F44B26ACBE0100CBCC74 /* CountriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				507CC21626A76481001A809A /* Covid_19_Status.xcdatamodeld */,
 				50F0F45126ACC08900CBCC74 /* CountryTableViewCell.swift */,
 				50F0F45326ACC6A300CBCC74 /* CovidStatusViewController.swift */,
+				50E909C626C3133E004BEB79 /* CovidStatusViewCell.swift */,
 			);
 			path = "Covid-19-Status";
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				50F0F45226ACC08900CBCC74 /* CountryTableViewCell.swift in Sources */,
 				50F0F45426ACC6A300CBCC74 /* CovidStatusViewController.swift in Sources */,
 				50F0F45026ACBF0B00CBCC74 /* RealmService.swift in Sources */,
+				50E909C726C3133E004BEB79 /* CovidStatusViewCell.swift in Sources */,
 				507CC20E26A76481001A809A /* AppDelegate.swift in Sources */,
 				507CC21026A76481001A809A /* SceneDelegate.swift in Sources */,
 				9B29A8ED26B92729007561A8 /* FavoriteCountriesViewController.swift in Sources */,

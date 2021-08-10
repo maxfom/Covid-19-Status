@@ -153,6 +153,35 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8Dn-E0-e3z">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FCC-yy-fZr" customClass="CovidStatusViewCell" customModule="Covid_19_Status" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FCC-yy-fZr" id="0V7-08-Vit">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bf-fM-KBI">
+                                                    <rect key="frame" x="20" y="11" width="374" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="0bf-fM-KBI" firstAttribute="centerY" secondItem="0V7-08-Vit" secondAttribute="centerY" id="2rr-Dn-UyK"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="0bf-fM-KBI" secondAttribute="trailing" id="M2T-ex-no3"/>
+                                                <constraint firstItem="0bf-fM-KBI" firstAttribute="top" secondItem="0V7-08-Vit" secondAttribute="topMargin" id="MSh-QA-Fge"/>
+                                                <constraint firstItem="0bf-fM-KBI" firstAttribute="top" secondItem="0V7-08-Vit" secondAttribute="topMargin" id="NZc-fu-gxT"/>
+                                                <constraint firstItem="0bf-fM-KBI" firstAttribute="leading" secondItem="0V7-08-Vit" secondAttribute="leadingMargin" id="ORE-2J-oDB"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="0bf-fM-KBI" secondAttribute="bottom" id="gtH-Rd-f7I"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="0bf-fM-KBI" id="RcT-5X-drS"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="inD-f8-jxh"/>

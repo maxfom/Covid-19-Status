@@ -91,5 +91,30 @@ class CountryService {
         }
         return task
     }
+    
+    @discardableResult
+    func getStatsOfCountry(country: String, completion: @escaping (Result<[StatsCountryItem], Error>) -> Void) -> URLSessionDataTask? {
+        let task = sendRequestForCountryStats(
+            endpoint: .statsOfCountry,
+            parameters: [
+                "from": "2020-03-01T00:00:00Z",
+                "to": "2020-04-01T00:00:00Z",
+            ]
+        ) { result in
+            switch result {
+            case .success(let json):
+                do {
+                    let stats = try CountryParser().parseStatsForCurrentCountry(json: json)
+                    completion(.success(stats))
+                } catch {
+                    completion(.failure(error))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+        return task
+    }
 
 }

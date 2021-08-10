@@ -9,58 +9,57 @@ import UIKit
 import SwiftyJSON
 import RealmSwift
 
-
-import UIKit
-import SwiftyJSON
-import RealmSwift
-
 class CovidStatusViewController: BaseTableViewController {
 
     private var country: String = ""
-    private var stats: Results<StatsCountryItem> = RealmService.getStatsOfCountry()
+    private var statis: StatsCountryItem?
     private var token: NotificationToken?
     private let countryService = CountryService()
     
     
     override func viewDidLoad() {
-            super.viewDidLoad()
-        }
-    
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            stats = RealmService.getStatsOfCountry()
-            let countryObject = try! Realm().object(ofType: CountryItem.self, forPrimaryKey: country)
-            token = countryObject?
-                .observe(on: .main) { [weak self] change in
-                    switch change {
-                    case .change(_, let properties):
-                        for property in properties {
-                            if property.name == "countryStats" {
-                                self?.country = property.newValue as? CountryService
-                                self?.tableView.reloadData()
-                            }
+        super.viewDidLoad()
+        statis = RealmService.getStatsOfCountry(for: country)
+        let countryObject = try! Realm().object(ofType: StatsCountryItem.self, forPrimaryKey: country)
+        token = countryObject?
+            .observe(on: .main) { [weak self] change in
+                switch change {
+                case .change(_, let properties):
+                    for property in properties {
+                        if property.name == "currentStats" {
+                            self?.statis = property.newValue as? StatsCountryItem
+                            self?.tableView.reloadData()
                         }
-    
-                    case .deleted:
-                        self?.navigationController?.popViewController(animated: true)
-    
-                    case .error(let error):
-                        print(error.localizedDescription)
                     }
+                    
+                case .deleted:
+                    self?.navigationController?.popViewController(animated: true)
+                    
+                case .error(let error):
+                    print(error.localizedDescription)
                 }
-    
-            func getStatsOfCountry(country: country) { [weak self] stats in
-                guard let self = self, let stats = stats else { return }
-                RealmService.saveStatsOfCountry(stats, to: self.coutry)
             }
-            
-            
-            func configure(country: String) {
-                    self.country = country
+    }
     
-        }
+    func configure(country: String) {
+        self.country = country
+    }
     
+    func getStatsOfCountry(completion: @escaping ([StatsCountryItem]?) -> Void) {
+        countryService.getStatsOfCountry(country: country) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let statis):
+                    completion(statis)
+                    
+                case .failure(let error):
+                    completion(nil)
+                    self?.showAlert(title: "Error", message: error.localizedDescription, cancelButton: "OK")
+                }
+            }
         }
+    }
+}
 
 extension CovidStatusViewController {
 
@@ -69,7 +68,7 @@ extension CovidStatusViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if stats == nil {
+        if statis == nil {
             return 0
         } else {
             return 4
@@ -77,22 +76,22 @@ extension CovidStatusViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let stats = stats else { return UITableViewCell() }
+        guard let statis = statis else { return UITableViewCell() }
 
         if indexPath.section == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: CovidStatusViewCell.cellIdentifier, for: indexPath) as? CovidStatusViewController {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: CovidStatusViewCell.cellIdentifier, for: indexPath) as? CovidStatusViewCell {
                 switch indexPath.row {
                 case 0:
-                    cell.configure(title: "Подтверждено: \(stats.confirmed) ºC")
+                    cell.configure(title: "Подтверждено: \(statis.confirmed) ºC")
 
                 case 1:
-                    cell.configure(title: "Смертей: \(stats.deaths)")
+                    cell.configure(title: "Смертей: \(statis.deaths)")
 
                 case 2:
-                    cell.configure(title: "Выздоровили: \(stats.recovered)")
+                    cell.configure(title: "Выздоровили: \(statis.recovered)")
 
                 case 3:
-                    cell.configure(title: "Страна: \(stats.country)")
+                    cell.configure(title: "Страна: \(statis.country)")
 
                 default:
                     break
@@ -103,5 +102,4 @@ extension CovidStatusViewController {
 
         fatalError("Couldn't find cell's class")
     }
-}
 }
