@@ -117,7 +117,7 @@ extension FavoriteCountriesViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
-        let country = items[indexPath.row].country
+        let country = items[indexPath.row]
         guard let vc = storyboard?.instantiateViewController(identifier: "CovidStatusViewController") as? CovidStatusViewController else { return }
         vc.configure(country: country)
         show(vc, sender: self)

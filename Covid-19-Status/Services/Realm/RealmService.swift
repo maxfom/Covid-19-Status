@@ -47,21 +47,16 @@ class RealmService {
         let realm = try! Realm()
         guard let country = realm.object(ofType: CountryItem.self, forPrimaryKey: slug) else { return }
         try? realm.write {
+            realm.delete(realm.objects(StatsCountryItem.self).filter("country == %@", country.country))
             country.isFavorite = false
         }
     }
-    
-    static func getStatsOfCountry(for country: String) -> StatsCountryItem? {
+        
+    static func saveStatsOfCountry(_ stats: [StatsCountryItem], to country: CountryItem) {
         let realm = try! Realm()
-        guard let country = realm.object(ofType: CountryItem.self, forPrimaryKey: country) else { return nil }
-        return country.currentStats
-    }
-    
-    static func saveStatsOfCountry(_ stats: StatsCountryItem, to country: String) {
-        let realm = try! Realm()
-        guard let country = realm.object(ofType: StatsCountryItem.self, forPrimaryKey: country) else { return }
-        try? realm.write {
-            country.countryData = stats
+        try! realm.write {
+            realm.delete(realm.objects(StatsCountryItem.self).filter("country == %@", country.country))
+            country.currentStats.append(objectsIn: stats)
         }
     }
     

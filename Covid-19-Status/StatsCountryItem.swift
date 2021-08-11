@@ -10,28 +10,32 @@ import RealmSwift
 
 class StatsCountryItem: Object {
 
-    @objc dynamic var confirmed: String = ""
-    @objc dynamic var deaths: String = ""
-    @objc dynamic var recovered: String = ""
-    @objc dynamic var countryData: StatsCountryItem?
+    @objc dynamic var id: String = ""
+    @objc dynamic var confirmed: Int = 0
+    @objc dynamic var deaths: Int = 0
+    @objc dynamic var recovered: Int = 0
     @objc dynamic var country: String = ""
+    @objc dynamic var date: Date = Date()
     
     override class func primaryKey() -> String? {
-        return "country"
+        return "id"
     }
     
     convenience init(
-        confirmed: String,
-        deaths: String,
-        recovered: String,
-        country: String
-    )
+        id: String,
+        confirmed: Int,
+        deaths: Int,
+        recovered: Int,
+        country: String,
+        date: Date)
     {
         self.init()
+        self.id = id
         self.confirmed = confirmed
         self.deaths = deaths
         self.recovered = recovered
         self.country = country
+        self.date = date
     }
     
 }

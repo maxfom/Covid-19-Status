@@ -18,9 +18,19 @@ class CountryService {
         static let period = "2020"
     }
     
-    enum Endpoint: String {
-        case allCountries = "/countries"
-        case statsOfCountry = "/country"
+    enum Endpoint {
+        case allCountries
+        case statsOfCountry(String)
+        
+        var endpointString: String {
+            switch self {
+            case .allCountries:
+                return "/countries"
+                
+            case .statsOfCountry(let country):
+                return "/country/\(country)"
+            }
+        }
     }
     
     
@@ -40,7 +50,7 @@ class CountryService {
         var components = URLComponents()
         components.scheme = Spec.scheme
         components.host = Spec.host
-        components.path = endpoint.rawValue
+        components.path = endpoint.endpointString
         guard let url = components.url else {
             completion(.failure(CountryParsingError.invalidURL))
             return nil
@@ -57,7 +67,7 @@ class CountryService {
         var components = URLComponents()
         components.scheme = Spec.scheme
         components.host = Spec.host
-        components.path = endpoint.rawValue
+        components.path = endpoint.endpointString
         let parametersDict = defaultParameters().merging(parameters) { (_, new) in new }
         components.queryItems = parametersDict.map { key, value in
             URLQueryItem(name: key, value: value)
@@ -95,7 +105,7 @@ class CountryService {
     @discardableResult
     func getStatsOfCountry(country: String, completion: @escaping (Result<[StatsCountryItem], Error>) -> Void) -> URLSessionDataTask? {
         let task = sendRequestForCountryStats(
-            endpoint: .statsOfCountry,
+            endpoint: .statsOfCountry(country),
             parameters: [
                 "from": "2020-03-01T00:00:00Z",
                 "to": "2020-04-01T00:00:00Z",

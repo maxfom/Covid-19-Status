@@ -15,6 +15,11 @@ enum CountryParsingError: Error {
 }
 
 class CountryParser {
+    private let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return df
+    }()
     
     func parseCountries(json: JSON) throws -> [CountryItem] {
         let favoriteSlugs = RealmService.getFavoriteCountries().map { $0.slug }
@@ -34,22 +39,25 @@ class CountryParser {
         }
     }
     
-    
     func parseStatsForCurrentCountry(json: JSON) throws -> [StatsCountryItem] {
-        return try json.arrayValue.compactMap {value in
-        guard let confirmed = json["Confirmed"].string,
-                let deaths = json["Deaths"].string,
-                let recovered = json["Recovered"].string,
-                let country = json["Country"].string
-        else {
-            throw CountryParsingError.invalidJSON
+        return try json.arrayValue.compactMap { value in
+            guard let confirmed = value["Confirmed"].int,
+                  let deaths = value["Deaths"].int,
+                  let recovered = value["Recovered"].int,
+                  let country = value["Country"].string,
+                  let id = value["ID"].string,
+                  let timestamp = value["Date"].string
+            else {
+                throw CountryParsingError.invalidJSON
+            }
+            return StatsCountryItem(
+                id: id,
+                confirmed: confirmed,
+                deaths: deaths,
+                recovered: recovered,
+                country: country,
+                date: dateFormatter.date(from: timestamp) ?? Date()
+            )
         }
-        return StatsCountryItem(
-            confirmed: confirmed,
-            deaths: deaths,
-            recovered: recovered,
-            country: country
-        )
-    }
     }
 }
