@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -142,6 +143,65 @@
             </objects>
             <point key="canvasLocation" x="1681" y="80"/>
         </scene>
+        <!--Country detailing stats-->
+        <scene sceneID="1yS-1D-KVG">
+            <objects>
+                <viewController storyboardIdentifier="FavoriteCountryInfoViewController" id="5b2-UC-9Ox" customClass="FavoriteCountryInfoViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8je-vw-ahk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rxd-IA-0kl">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6iC-d2-jn7">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="4Ie-J9-xrk" customClass="CollectionViewCell" customModule="Covid_19_Status" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iG7-VZ-f1c">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OjP-5s-N2j">
+                                                    <rect key="frame" x="43" y="53.5" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="OjP-5s-N2j" firstAttribute="centerY" secondItem="iG7-VZ-f1c" secondAttribute="centerY" id="Mh6-C2-e8X"/>
+                                                <constraint firstItem="OjP-5s-N2j" firstAttribute="centerX" secondItem="iG7-VZ-f1c" secondAttribute="centerX" id="vhS-Zw-lUV"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="labelCell" destination="iG7-VZ-f1c" id="hM6-Eh-8VB"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="JVe-yw-lYu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JVe-yw-lYu" firstAttribute="bottom" secondItem="rxd-IA-0kl" secondAttribute="bottom" id="KSM-mE-pNM"/>
+                            <constraint firstItem="rxd-IA-0kl" firstAttribute="top" secondItem="JVe-yw-lYu" secondAttribute="top" id="MmV-3G-Ejw"/>
+                            <constraint firstItem="JVe-yw-lYu" firstAttribute="trailing" secondItem="rxd-IA-0kl" secondAttribute="trailing" id="P5W-Gs-X9O"/>
+                            <constraint firstItem="rxd-IA-0kl" firstAttribute="leading" secondItem="JVe-yw-lYu" secondAttribute="leading" id="jG6-Q5-OcC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Country detailing stats" id="nMd-rp-NCj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ayX-b5-vJ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1679.7101449275362" y="744.64285714285711"/>
+        </scene>
         <!--Covid Status View Controller-->
         <scene sceneID="sZO-dg-IRh">
             <objects>
@@ -199,7 +259,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="38m-Ky-TJ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2819" y="75"/>
+            <point key="canvasLocation" x="2433" y="80"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jTu-eT-NQ0">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jMT-a4-SXJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vj7-Wc-1v9">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5b2-UC-9Ox" kind="relationship" relationship="rootViewController" id="WqS-mK-5Wg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pGn-Tt-mlo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="928.98550724637687" y="744.64285714285711"/>
         </scene>
     </scenes>
     <resources>
