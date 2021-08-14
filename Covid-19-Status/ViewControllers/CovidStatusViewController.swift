@@ -15,6 +15,7 @@ class CovidStatusViewController: BaseTableViewController {
     private var status: Results<StatsCountryItem>!
     private var token: NotificationToken?
     private let countryService = CountryService()
+    private var period = 0
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .medium
@@ -24,7 +25,7 @@ class CovidStatusViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        token = status.observe(
+        token = status?.observe(
             on: .main,
             { [weak self] changes in
                 guard let tableView = self?.tableView else { return }
@@ -60,6 +61,10 @@ class CovidStatusViewController: BaseTableViewController {
                 RealmService.saveStatsOfCountry(stats, to: country)
             }
         }
+    }
+    
+    func sentTime(period: DateFormatter) {
+        self.period = 0
     }
     
     func getStatsOfCountry(completion: @escaping ([StatsCountryItem]?) -> Void) {

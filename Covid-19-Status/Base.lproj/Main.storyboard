@@ -143,7 +143,7 @@
             </objects>
             <point key="canvasLocation" x="1681" y="80"/>
         </scene>
-        <!--Country detailing stats-->
+        <!--Favorite Country Info View Controller-->
         <scene sceneID="1yS-1D-KVG">
             <objects>
                 <viewController storyboardIdentifier="FavoriteCountryInfoViewController" id="5b2-UC-9Ox" customClass="FavoriteCountryInfoViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
@@ -196,7 +196,7 @@
                             <constraint firstItem="rxd-IA-0kl" firstAttribute="leading" secondItem="JVe-yw-lYu" secondAttribute="leading" id="jG6-Q5-OcC"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Country detailing stats" id="nMd-rp-NCj"/>
+                    <navigationItem key="navigationItem" id="nMd-rp-NCj"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayX-b5-vJ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

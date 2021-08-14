@@ -15,7 +15,8 @@ class CountryService {
     private enum Spec {
         static let scheme = "https"
         static let host = "api.covid19api.com"
-        static let period = "2020"
+        static let periodFrom = "2020-03-01T00:00:00Z"
+        static let periodTo = "2020-04-01T00:00:00Z"
     }
     
     enum Endpoint {
@@ -36,7 +37,8 @@ class CountryService {
     
     func defaultParameters() -> [String: String] {
         [
-            "period": Spec.period,
+            "from": Spec.periodFrom,
+            "to": Spec.periodTo
         ]
     }
     
@@ -107,8 +109,8 @@ class CountryService {
         let task = sendRequestForCountryStats(
             endpoint: .statsOfCountry(country),
             parameters: [
-                "from": "2020-03-01T00:00:00Z",
-                "to": "2020-04-01T00:00:00Z",
+                "from": Spec.periodFrom,
+                "to": Spec.periodTo,
             ]
         ) { result in
             switch result {
