@@ -12,12 +12,15 @@ class CountryService {
     
     private let networkService = NetworkService()
     
-    private enum Spec {
+    
+    
+    enum Spec {
         static let scheme = "https"
         static let host = "api.covid19api.com"
-        static let periodFrom = "2020-03-01T00:00:00Z"
-        static let periodTo = "2020-04-01T00:00:00Z"
+        static var periodFrom = "2020-03-01T00:00:00Z"
+        static var periodTo = "2020-04-01T00:00:00Z"
     }
+    
     
     enum Endpoint {
         case allCountries

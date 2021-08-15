@@ -14,13 +14,14 @@ class FavoriteCountryInfoViewController: UIViewController {
     var countryTitle: String = ""
     var monthStat = "Статистика за месяц"
     var weekStat = "Статистика за неделю"
-    var dayStat = "Статистика за день"
+    var dayStat = "Статистика за вчера"
     var allStat = "Статистика за все время"
     
-    var monthTime = DateFormatter.init()
-    var weekTime = DateFormatter.init()
-    var dayTime = DateFormatter.init()
-    var allTime = DateFormatter.init()
+    var today: String = ""
+    var fromMonth: String = ""
+    var fromWeek: String = ""
+    var fromDay: String = ""
+    var allTime: String = ""
     
     override func loadView() {
         super.loadView()
@@ -39,6 +40,10 @@ class FavoriteCountryInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        today = getYesterday()
+        fromMonth = getMonthFromToday()
+        fromWeek = getWeekFromToday()
+        fromDay = getTwoDays()
         navigationItem.title = countryTitle
         self.collectionView.backgroundColor = .white
         self.collectionView.dataSource = self
@@ -51,6 +56,40 @@ class FavoriteCountryInfoViewController: UIViewController {
     func configure(country: CountryItem) {
         countryTitle = country.country
         self.country = country
+    }
+    
+    //MARK: - Получение даты - переписать в одну функцию
+    
+    func getYesterday() -> String {
+        let today = Date()
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'00:00:00'Z'"
+        return formatter.string(for: yesterday) ?? ""
+    }
+    
+    func getMonthFromToday() -> String {
+        let today = Date()
+        let month = Calendar.current.date(byAdding: .month, value: -1, to: today)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'00:00:00'Z'"
+        return formatter.string(for: month) ?? ""
+    }
+    
+    func getWeekFromToday() -> String {
+        let today = Date()
+        let week = Calendar.current.date(byAdding: .day, value: -7, to: today)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'00:00:00'Z'"
+        return formatter.string(for: week) ?? ""
+    }
+    
+    func getTwoDays() -> String {
+        let today = Date()
+        let week = Calendar.current.date(byAdding: .day, value: -2, to: today)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'00:00:00'Z'"
+        return formatter.string(for: week) ?? ""
     }
     
 }
@@ -86,17 +125,16 @@ extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
 extension FavoriteCountryInfoViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row + 1)
         guard let vc = storyboard?.instantiateViewController(identifier: "CovidStatusViewController") as? CovidStatusViewController else { return }
         switch indexPath.row {
         case 0:
-            vc.sentTime(period: monthTime)
+            vc.sentTime(toPeriod: today, fromPeriod: fromMonth)
         case 1:
-            vc.sentTime(period: weekTime)
+            vc.sentTime(toPeriod: today, fromPeriod: fromWeek)
         case 2:
-            vc.sentTime(period: dayTime)
+            vc.sentTime(toPeriod: today, fromPeriod: fromDay)
         default:
-            vc.sentTime(period: allTime)
+            vc.sentTime(toPeriod: today, fromPeriod: allTime)
         }
         vc.configure(country: country)
         show(vc, sender: self)
@@ -130,5 +168,3 @@ extension FavoriteCountryInfoViewController: UICollectionViewDelegateFlowLayout 
         return UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8)
     }
 }
-
-

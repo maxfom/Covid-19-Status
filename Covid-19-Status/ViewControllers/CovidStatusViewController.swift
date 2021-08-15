@@ -15,7 +15,9 @@ class CovidStatusViewController: BaseTableViewController {
     private var status: Results<StatsCountryItem>!
     private var token: NotificationToken?
     private let countryService = CountryService()
-    private var period = 0
+    private var toPeriod: String = ""
+    private var fromPeriod: String = ""
+    private var today: String = ""
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .medium
@@ -25,6 +27,7 @@ class CovidStatusViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        sentTime(toPeriod: toPeriod, fromPeriod: fromPeriod)
         token = status?.observe(
             on: .main,
             { [weak self] changes in
@@ -63,8 +66,10 @@ class CovidStatusViewController: BaseTableViewController {
         }
     }
     
-    func sentTime(period: DateFormatter) {
-        self.period = 0
+    func sentTime(toPeriod: String, fromPeriod: String) {
+        self.toPeriod = toPeriod
+        CountryService.Spec.periodTo = toPeriod
+        CountryService.Spec.periodFrom = fromPeriod
     }
     
     func getStatsOfCountry(completion: @escaping ([StatsCountryItem]?) -> Void) {
