@@ -12,13 +12,9 @@ class CountryService {
     
     private let networkService = NetworkService()
     
-    
-    
     enum Spec {
         static let scheme = "https"
         static let host = "api.covid19api.com"
-        static var periodFrom = "2020-03-01T00:00:00Z"
-        static var periodTo = "2020-04-01T00:00:00Z"
     }
     
     
@@ -39,10 +35,7 @@ class CountryService {
     
     
     func defaultParameters() -> [String: String] {
-        [
-            "from": Spec.periodFrom,
-            "to": Spec.periodTo
-        ]
+        [:]
     }
     
     // https://api.covid19api.com/country/south-africa?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z
@@ -108,12 +101,12 @@ class CountryService {
     }
     
     @discardableResult
-    func getStatsOfCountry(country: String, completion: @escaping (Result<[StatsCountryItem], Error>) -> Void) -> URLSessionDataTask? {
+    func getStatsOfCountry(country: String, from: String, to: String, completion: @escaping (Result<[StatsCountryItem], Error>) -> Void) -> URLSessionDataTask? {
         let task = sendRequestForCountryStats(
             endpoint: .statsOfCountry(country),
             parameters: [
-                "from": Spec.periodFrom,
-                "to": Spec.periodTo,
+                "from": from,
+                "to": to,
             ]
         ) { result in
             switch result {

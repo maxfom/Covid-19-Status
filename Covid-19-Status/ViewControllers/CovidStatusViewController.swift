@@ -17,7 +17,6 @@ class CovidStatusViewController: BaseTableViewController {
     private let countryService = CountryService()
     private var toPeriod: String = ""
     private var fromPeriod: String = ""
-    private var today: String = ""
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .medium
@@ -27,7 +26,6 @@ class CovidStatusViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sentTime(toPeriod: toPeriod, fromPeriod: fromPeriod)
         token = status?.observe(
             on: .main,
             { [weak self] changes in
@@ -55,8 +53,10 @@ class CovidStatusViewController: BaseTableViewController {
         )
     }
     
-    func configure(country: CountryItem) {
+    func configure(country: CountryItem, toPeriod: String, fromPeriod: String) {
         self.country = country
+        self.fromPeriod = fromPeriod
+        self.toPeriod = toPeriod
         status = country.currentStats.sorted(byKeyPath: "date", ascending: false)
         getStatsOfCountry { stats in
             guard let stats = stats else { return }
@@ -65,15 +65,9 @@ class CovidStatusViewController: BaseTableViewController {
             }
         }
     }
-    
-    func sentTime(toPeriod: String, fromPeriod: String) {
-        self.toPeriod = toPeriod
-        CountryService.Spec.periodTo = toPeriod
-        CountryService.Spec.periodFrom = fromPeriod
-    }
-    
+        
     func getStatsOfCountry(completion: @escaping ([StatsCountryItem]?) -> Void) {
-        countryService.getStatsOfCountry(country: country.country) { [weak self] result in
+        countryService.getStatsOfCountry(country: country.country, from: fromPeriod, to: toPeriod) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let statis):
@@ -91,19 +85,12 @@ class CovidStatusViewController: BaseTableViewController {
 extension CovidStatusViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if status == nil {
-            return 0
-        } else {
-            return status.count
-        }
+        status != nil ? status.count : 0
+
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if status == nil {
-            return 0
-        } else {
-            return 4
-        }
+        status != nil ? 4 : 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
