@@ -91,7 +91,7 @@ class FavoriteCountryInfoViewController: UIViewController {
         self.country = country
     }
     
-    //MARK: - Получение даты - переписать в одну функцию
+    //MARK: - Получение даты - в одну функцию
     func getDateWithOffset(byAdding component: Calendar.Component, value: Int) -> String {
         let today = Date()
         let week = Calendar.current.date(byAdding: component, value: value, to: today)
