@@ -106,19 +106,32 @@ class FavoriteCountryInfoViewController: UIViewController {
 extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return periods.count
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return periods.count
+        default:
+            return periods.count
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
+            cell.labelCell.text = "Здесь будет фото страны"
+            return cell
+        }
+        else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
         cell.labelCell.text = periods[indexPath.row].title
         return cell
+        }
     }
-    
 }
 
 extension FavoriteCountryInfoViewController: UICollectionViewDelegate {
