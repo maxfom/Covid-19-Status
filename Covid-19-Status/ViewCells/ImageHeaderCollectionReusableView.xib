@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageHeader" id="U6b-Vx-4bR" customClass="ImageHeaderCollectionReusableView" customModule="Covid_19_Status" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Russia" translatesAutoresizingMaskIntoConstraints="NO" id="SAK-c5-BbM">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <constraints>
+                <constraint firstItem="SAK-c5-BbM" firstAttribute="trailing" secondItem="VXr-Tz-HHm" secondAttribute="trailing" id="E59-fI-HeX"/>
+                <constraint firstItem="SAK-c5-BbM" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="Rdm-hp-GRy"/>
+                <constraint firstItem="SAK-c5-BbM" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="bbu-RB-ca4"/>
+                <constraint firstItem="SAK-c5-BbM" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="ut5-1g-Ot2"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="112.16517857142857"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="Russia" width="290" height="198"/>
+    </resources>
+</document>

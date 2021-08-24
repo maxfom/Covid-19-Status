@@ -56,6 +56,8 @@ class FavoriteCountryInfoViewController: UIViewController {
     override func loadView() {
         super.loadView()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.bounces = true
+        collectionView.alwaysBounceVertical = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -83,7 +85,11 @@ class FavoriteCountryInfoViewController: UIViewController {
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        
+        self.collectionView.register(
+            UINib(nibName: "ImageHeaderCollectionReusableView", bundle: nil),
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "ImageHeader"
+        )
     }
     
     func configure(country: CountryItem) {
@@ -132,12 +138,25 @@ extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
         return cell
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              indexPath.section == 0
+        else {
+            return UICollectionReusableView()
+        }
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ImageHeader", for: indexPath) as! ImageHeaderCollectionReusableView
+        return header
+    }
+    
 }
 
 extension FavoriteCountryInfoViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(identifier: "CovidStatusViewController") as? CovidStatusViewController else { return }
+        guard indexPath.section > 0 else { return }
         if today == nil {
             today = getDateWithOffset(byAdding: .day, value: -1)
         }
@@ -175,4 +194,12 @@ extension FavoriteCountryInfoViewController: UICollectionViewDelegateFlowLayout 
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8)
     }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            return CGSize(width: collectionView.bounds.width, height: 200)
+        }
+        return .zero
+    }
+    
 }

@@ -20,11 +20,7 @@ class ImageCountryService {
     enum Endpoint {
         case allCountries
         case statsOfCountry(String)
-        
-        
     }
-
-    
     
     // https://api.unsplash.com/search/photos?page=1&query=Russia&client_id=XuN1jrhpr9tBExk-eYqYmCV8zwpkpmA2r0GHayi5W58
 }

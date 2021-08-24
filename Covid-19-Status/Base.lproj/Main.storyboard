@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PyC-GT-E3X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M85-ZS-Rd5">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -64,12 +64,78 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="928.98550724637687" y="79.6875"/>
+            <point key="canvasLocation" x="1839.1304347826087" y="79.6875"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="MXH-Xt-VXP">
+            <objects>
+                <tabBarController id="M85-ZS-Rd5" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bap-Wb-3yv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemIndigoColor"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="PyC-GT-E3X" kind="relationship" relationship="viewControllers" id="EG4-Tn-5JL"/>
+                        <segue destination="QLq-DR-IQV" kind="relationship" relationship="viewControllers" id="EPI-jS-50B"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CPF-lu-06T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-199" y="508"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="fBW-Dm-l4X">
+            <objects>
+                <viewController id="QLq-DR-IQV" customClass="MapViewController" customModule="Covid_19_Status" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s7Q-Cx-TFh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1os-fa-mYw">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpV-6l-iDR">
+                                <rect key="frame" x="354" y="725" width="44" height="44"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="YCN-um-yvm"/>
+                                    <constraint firstAttribute="height" constant="44" id="qWk-sa-hr3"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemIndigoColor"/>
+                                <state key="normal" image="location" catalog="system"/>
+                                <connections>
+                                    <action selector="locationAction" destination="QLq-DR-IQV" eventType="touchUpInside" id="vMj-1j-PiM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5DH-4y-Z3d"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1os-fa-mYw" firstAttribute="leading" secondItem="5DH-4y-Z3d" secondAttribute="leading" id="1iw-Cj-qcH"/>
+                            <constraint firstItem="1os-fa-mYw" firstAttribute="trailing" secondItem="5DH-4y-Z3d" secondAttribute="trailing" id="GUM-Sc-d3O"/>
+                            <constraint firstItem="1os-fa-mYw" firstAttribute="top" secondItem="s7Q-Cx-TFh" secondAttribute="top" id="QWh-FW-coU"/>
+                            <constraint firstItem="5DH-4y-Z3d" firstAttribute="trailing" secondItem="VpV-6l-iDR" secondAttribute="trailing" constant="16" id="UaQ-Xr-deG"/>
+                            <constraint firstItem="1os-fa-mYw" firstAttribute="bottom" secondItem="5DH-4y-Z3d" secondAttribute="bottom" id="jjF-Gh-UNG"/>
+                            <constraint firstItem="5DH-4y-Z3d" firstAttribute="bottom" secondItem="VpV-6l-iDR" secondAttribute="bottom" constant="44" id="wtj-sv-zzy"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="map.fill" catalog="system" id="0Ec-qx-frf"/>
+                    <connections>
+                        <outlet property="locationButton" destination="VpV-6l-iDR" id="qFN-un-rGh"/>
+                        <outlet property="mapView" destination="1os-fa-mYw" id="JSO-pm-xlg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xjk-9Q-3oH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="928.98550724637687" y="827.67857142857144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wDd-3g-NrV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PyC-GT-E3X" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="E53-P9-UXK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3Gb-Os-sbo">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -82,7 +148,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fR2-UL-jeM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18.840579710144929" y="79.6875"/>
+            <point key="canvasLocation" x="928.98550724637687" y="79.6875"/>
         </scene>
         <!--Countries-->
         <scene sceneID="mwy-JP-8ot">
@@ -140,7 +206,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7TC-wK-dtK" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1681" y="80"/>
+            <point key="canvasLocation" x="2589.8550724637685" y="79.6875"/>
         </scene>
         <!--Favorite Country Info View Controller-->
         <scene sceneID="1yS-1D-KVG">
@@ -156,7 +222,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayX-b5-vJ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1679.7101449275362" y="744.64285714285711"/>
+            <point key="canvasLocation" x="4121.739130434783" y="79.6875"/>
         </scene>
         <!--Covid Status View Controller-->
         <scene sceneID="sZO-dg-IRh">
@@ -215,30 +281,20 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="38m-Ky-TJ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2433" y="80"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="jTu-eT-NQ0">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jMT-a4-SXJ" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vj7-Wc-1v9">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="5b2-UC-9Ox" kind="relationship" relationship="rootViewController" id="WqS-mK-5Wg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pGn-Tt-mlo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="928.98550724637687" y="744.64285714285711"/>
+            <point key="canvasLocation" x="3342.0289855072465" y="79.6875"/>
         </scene>
     </scenes>
     <resources>
+        <image name="location" catalog="system" width="128" height="121"/>
+        <image name="map.fill" catalog="system" width="128" height="110"/>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
