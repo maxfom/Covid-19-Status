@@ -24,11 +24,14 @@ class CollectionViewCell: UICollectionViewCell {
                 labelCell.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
                 labelCell.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             ])
-            self.labelCell = labelCell
+        self.labelCell = labelCell
 
-            self.contentView.backgroundColor = .orange
-            self.labelCell.textAlignment = .center
-        }
+        self.contentView.backgroundColor = UIColor(red: 139/255, green: 169.0/255, blue: 189.0/255, alpha: 1.0)
+        self.labelCell.textColor = .white
+        self.labelCell.textAlignment = .center
+        self.labelCell.lineBreakMode = .byWordWrapping
+        self.labelCell.numberOfLines = 0
+    }
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)

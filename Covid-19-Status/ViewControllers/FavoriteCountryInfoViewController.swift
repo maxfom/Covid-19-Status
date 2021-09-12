@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FavoriteCountryInfoViewController: UIViewController {
     
@@ -47,6 +48,8 @@ class FavoriteCountryInfoViewController: UIViewController {
     }
     
     var country: CountryItem!
+    var imageCountryService = ImageCountryService()
+    var countryInfo: Results<CountryImageItem> = RealmService.getImageInfo()
     var collectionView: UICollectionView!
     var countryTitle: String = ""
     var periods = Period.allCases
@@ -90,7 +93,29 @@ class FavoriteCountryInfoViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "ImageHeader"
         )
+        
+        self.getImageCountry() { countryInfo in
+            guard let countryInfo = countryInfo else { return }
+            RealmService.saveImageInfo(countryInfo: countryInfo)
+        }
+        print(countryInfo.first?.imageCountry)
     }
+    
+    func getImageCountry(completion: @escaping ([CountryImageItem]?) -> Void) {
+        imageCountryService.getImageCountry() { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let countryInfo):
+                    completion(countryInfo)
+                    print(countryInfo)
+                case .failure(let error):
+                    completion(nil)
+                    self?.showAlert(title: "Error", message: error.localizedDescription, cancelButton: "OK")
+                }
+            }
+        }
+    }
+    
     
     func configure(country: CountryItem) {
         countryTitle = country.country
@@ -118,7 +143,7 @@ extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1
+            return 0
         case 1:
             return periods.count
         default:
@@ -127,16 +152,9 @@ extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
-            cell.labelCell.text = "Здесь будет фото страны"
-            return cell
-        }
-        else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
         cell.labelCell.text = periods[indexPath.row].title
         return cell
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -174,9 +192,10 @@ extension FavoriteCountryInfoViewController: UICollectionViewDelegateFlowLayout 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: collectionView.bounds.size.width - 16, height: 120)
+        let width = (view.frame.width - 20) / 2.0
+        return CGSize(width: width, height: 120)
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {

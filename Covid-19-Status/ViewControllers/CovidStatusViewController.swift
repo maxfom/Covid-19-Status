@@ -9,12 +9,13 @@ import UIKit
 import SwiftyJSON
 import RealmSwift
 
-class CovidStatusViewController: BaseTableViewController {
+class CovidStatusViewController: UIViewController {
 
     private var country: CountryItem!
     private var status: Results<StatsCountryItem>!
     private var token: NotificationToken?
     private let countryService = CountryService()
+    private var collectionView: UICollectionView!
     private var toPeriod: String = ""
     private var fromPeriod: String = ""
     private let dateFormatter: DateFormatter = {
@@ -24,32 +25,32 @@ class CovidStatusViewController: BaseTableViewController {
         return df
     }()
     
+    override func loadView() {
+        super.loadView()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.bounces = true
+        collectionView.alwaysBounceVertical = true
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collectionView)
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        ])
+        self.collectionView = collectionView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        token = status?.observe(
-            on: .main,
-            { [weak self] changes in
-                guard let tableView = self?.tableView else { return }
-                switch changes {
-                case .initial:
-                    // Results are now populated and can be accessed without blocking the UI
-                    tableView.reloadData()
-                case .update(_, let deletions, let insertions, let modifications):
-                    // Query results have changed, so apply them to the UITableView
-                    tableView.performBatchUpdates({
-                        // Always apply updates in the following order: deletions, insertions, then modifications.
-                        // Handling insertions before deletions may result in unexpected behavior.
-                        tableView.deleteSections(IndexSet(deletions), with: .automatic)
-                        tableView.insertSections(IndexSet(insertions), with: .automatic)
-                        tableView.reloadSections(IndexSet(modifications), with: .automatic)
-                    }, completion: { finished in
-                        // ...
-                    })
-                case .error(let error):
-                    // An error occurred while opening the Realm file on the background worker thread
-                    fatalError("\(error)")
-                }
-            }
+        self.collectionView.backgroundColor = .white
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "CellStatus")
+        self.collectionView.register(
+            UINib(nibName: "ImageHeaderCollectionReusableView", bundle: nil),
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "ImageHeader"
         )
     }
     
@@ -82,45 +83,157 @@ class CovidStatusViewController: BaseTableViewController {
     }
 }
 
-extension CovidStatusViewController {
+//extension CovidStatusViewController: UICollectionViewDataSource {
+//
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        status != nil ? status.count : 0
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        switch section {
+//        case 0:
+//            return 1
+//        case 1:
+//            return status.count
+//        default:
+//            return status.count
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellStatus", for: indexPath) as? CollectionViewCell
+//        else {
+//            fatalError("Couldn't find cell's class")
+//        }
+//        let status = status[indexPath.section]
+//        switch indexPath.row {
+//        case 0:
+//            cell.labelCell.text = "status.confirmed"
+//            cell.layer.borderWidth = 0.5
+//            cell.backgroundColor = UIColor(red: 102/255, green: 153.0/255, blue: 204.0/255, alpha: 1.0)
+////        case 1:
+////            cell.labelCell.text(title: "Смертей: \(status.deaths)")
+////
+////        case 2:
+////            cell.labelCell.text(title: "Выздоровили: \(status.recovered)")
+////
+////        case 3:
+////            cell.labelCell.text(title: "Страна: \(status.country)")
+//
+//        default:
+//            break
+//        }
+//        return cell
+//    }
+//
+////    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+////        let status = status[section]
+////        return dateFormatter.string(from: status.date)
+////    }
+//
+//}
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        status != nil ? status.count : 0
 
+
+extension CovidStatusViewController: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+        //status != nil ? status.count : 0
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        status != nil ? 4 : 0
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CovidStatusViewCell.cellIdentifier, for: indexPath) as? CovidStatusViewCell
-        else {
-            fatalError("Couldn't find cell's class")
-        }
-        let status = status[indexPath.section]
-        switch indexPath.row {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
         case 0:
-            cell.configure(title: "Подтверждено: \(status.confirmed)")
-            
+            return 3
         case 1:
-            cell.configure(title: "Смертей: \(status.deaths)")
-            
-        case 2:
-            cell.configure(title: "Выздоровили: \(status.recovered)")
-            
-        case 3:
-            cell.configure(title: "Страна: \(status.country)")
-            
+            return status.count
         default:
-            break
+            return status.count
         }
-        return cell
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let status = status[section]
-        return dateFormatter.string(from: status.date)
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellStatus", for: indexPath) as! CollectionViewCell
+            var a = "Fuck you, ", b = "lol bot"
+            cell.labelCell.text = a + b
+            cell.layer.borderWidth = 0.5
+            cell.backgroundColor = UIColor(red: 102/255, green: 153.0/255, blue: 204.0/255, alpha: 1.0)
+            return cell
+        }
+        else {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellStatus", for: indexPath) as! CollectionViewCell
+            cell.labelCell.text = String(status[indexPath.row].confirmed)
+        return cell
+        }
+        
+    }
+        
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              indexPath.section == 0
+        else {
+            return UICollectionReusableView()
+        }
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ImageHeader", for: indexPath) as! ImageHeaderCollectionReusableView
+        return header
     }
     
 }
+
+extension CovidStatusViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+        
+    }
+    
+}
+
+
+extension CovidStatusViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            //return CGSize(width: collectionView.bounds.size.width - 16, height: 120)
+            let width = (view.frame.width - 20) / 3.0
+            return CGSize(width: width, height: 120)
+        }
+            else {
+                let width = (view.frame.width - 20) / 2.0
+                return CGSize(width: width, height: 120)
+            }
+    }
+        
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            return CGSize(width: collectionView.bounds.width, height: 200)
+        }
+        return .zero
+    }
+    
+}
+

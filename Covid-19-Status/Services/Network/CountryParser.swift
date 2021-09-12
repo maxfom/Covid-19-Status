@@ -39,6 +39,20 @@ class CountryParser {
         }
     }
     
+    func parseImageInfo(json: JSON) throws -> [CountryImageItem] {
+        return try json.arrayValue.compactMap { value in
+            guard let imageCountry = value["results"]["urls"]["regular"].string,
+                  let imageDescription = value["results"]["description"].string
+            else {
+                throw CountryParsingError.invalidJSON
+            }
+            return CountryImageItem(
+                imageDescription: imageDescription,
+                imageCountry: imageCountry
+            )
+        }
+    }
+    
     func parseStatsForCurrentCountry(json: JSON) throws -> [StatsCountryItem] {
         return try json.arrayValue.compactMap { value in
             guard let confirmed = value["Confirmed"].int,

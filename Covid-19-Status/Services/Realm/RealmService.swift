@@ -29,6 +29,18 @@ class RealmService {
         }
     }
     
+    static func saveImageInfo(countryInfo: [CountryImageItem]) {
+        let realm = try! Realm()
+        try? realm.write {
+            realm.add(countryInfo, update: .modified)
+        }
+    }
+    
+    static func getImageInfo() -> Results<CountryImageItem> {
+        let realm = try! Realm()
+        return realm.objects(CountryImageItem.self)
+    }
+    
     static func getFavoriteCountries() -> Results<CountryItem> {
         let realm = try! Realm()
         let countries = realm.objects(CountryItem.self).filter("isFavorite == true").sorted(byKeyPath: "country")
