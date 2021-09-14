@@ -40,9 +40,9 @@ class CountryParser {
     }
     
     func parseImageInfo(json: JSON) throws -> [CountryImageItem] {
-        return try json.arrayValue.compactMap { value in
-            guard let imageCountry = value["results"]["urls"]["regular"].string,
-                  let imageDescription = value["results"]["description"].string
+        return try json["results"].arrayValue.compactMap { value in
+            guard let imageCountry = value["urls"]["small"].string,
+                  let imageDescription = value["description"].string
             else {
                 throw CountryParsingError.invalidJSON
             }

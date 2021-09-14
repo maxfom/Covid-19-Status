@@ -41,6 +41,13 @@ class RealmService {
         return realm.objects(CountryImageItem.self)
     }
     
+    static func removeImageInfo() {
+        let realm = try! Realm()
+        try? realm.write {
+            realm.delete(realm.objects(CountryImageItem.self))
+        }
+    }
+    
     static func getFavoriteCountries() -> Results<CountryItem> {
         let realm = try! Realm()
         let countries = realm.objects(CountryItem.self).filter("isFavorite == true").sorted(byKeyPath: "country")

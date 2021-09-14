@@ -17,7 +17,7 @@ class ImageCountryService {
         static let scheme = "https"
         static let host = "api.unsplash.com"
         static let appId = "6uyiWMPwEKa7ylJEjZXjy9znIhik2LUeaf7uQlJvBOc"
-        static let country = "Russia"
+        //static let country = "Russia"
         static let per_page = "1"
     }
     
@@ -40,7 +40,7 @@ class ImageCountryService {
     func defaultParameters() -> [String: String] {
         [
             "client_id": Spec.appId,
-            "query": Spec.country,
+            //"query": Spec.country,
             "per_page": Spec.per_page
         ]
     }
@@ -69,8 +69,11 @@ func sendRequest(endpoint: Endpoint, parameters: [String: String], completion: @
     return task
 }
     
-    func getImageCountry(completion: @escaping (Result<[CountryImageItem], Error>) -> Void) -> URLSessionDataTask? {
-        let task = sendRequest(endpoint: .statsOfCountry, parameters: [:]) { result in
+    func getImageCountry(country: String, completion: @escaping (Result<[CountryImageItem], Error>) -> Void) -> URLSessionDataTask? {
+        let task = sendRequest(
+            endpoint: .statsOfCountry,
+            parameters: ["query" : country]
+        ) { result in
             switch result {
             case .success(let json):
                 do {

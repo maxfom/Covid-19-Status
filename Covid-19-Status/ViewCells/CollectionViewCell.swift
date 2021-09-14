@@ -41,7 +41,6 @@ class CollectionViewCell: UICollectionViewCell {
 
         override func awakeFromNib() {
             super.awakeFromNib()
-
             fatalError("Interface Builder is not supported!")
         }
 

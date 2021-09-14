@@ -83,6 +83,7 @@ class FavoriteCountriesViewController: BaseTableViewController {
                 switch result {
                 case .success(let countries):
                     completion(countries)
+                    RealmService.removeImageInfo()
                     
                 case .failure(let error):
                     completion(nil)

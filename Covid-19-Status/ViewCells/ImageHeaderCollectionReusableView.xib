@@ -13,21 +13,21 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Russia" translatesAutoresizingMaskIntoConstraints="NO" id="SAK-c5-BbM">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SuP-6h-pEc">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <constraints>
-                <constraint firstItem="SAK-c5-BbM" firstAttribute="trailing" secondItem="VXr-Tz-HHm" secondAttribute="trailing" id="E59-fI-HeX"/>
-                <constraint firstItem="SAK-c5-BbM" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="Rdm-hp-GRy"/>
-                <constraint firstItem="SAK-c5-BbM" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="bbu-RB-ca4"/>
-                <constraint firstItem="SAK-c5-BbM" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="ut5-1g-Ot2"/>
+                <constraint firstItem="SuP-6h-pEc" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="K99-x8-JLC"/>
+                <constraint firstItem="SuP-6h-pEc" firstAttribute="trailing" secondItem="VXr-Tz-HHm" secondAttribute="trailing" id="XSc-L6-kdq"/>
+                <constraint firstItem="SuP-6h-pEc" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="Y4M-6h-8go"/>
+                <constraint firstItem="SuP-6h-pEc" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="vKc-6G-Rzk"/>
             </constraints>
-            <point key="canvasLocation" x="137.68115942028987" y="112.16517857142857"/>
+            <connections>
+                <outlet property="headerTop" destination="SuP-6h-pEc" id="MQY-qb-DhP"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="111.83035714285714"/>
         </collectionReusableView>
     </objects>
-    <resources>
-        <image name="Russia" width="290" height="198"/>
-    </resources>
 </document>

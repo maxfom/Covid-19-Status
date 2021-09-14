@@ -75,6 +75,14 @@ class FavoriteCountryInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.getImageCountry() { countryInfo in
+            guard let countryInfo = countryInfo else { return }
+            RealmService.removeImageInfo()
+            RealmService.saveImageInfo(countryInfo: countryInfo)
+        }
+        
+        
         for period in periods {
             guard let (component, value) = period.dateOffset
             else {
@@ -93,33 +101,27 @@ class FavoriteCountryInfoViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "ImageHeader"
         )
+
         
-        self.getImageCountry() { countryInfo in
-            guard let countryInfo = countryInfo else { return }
-            RealmService.saveImageInfo(countryInfo: countryInfo)
-        }
-        print(countryInfo.first?.imageCountry)
+    }
+    
+    func configure(country: CountryItem) {
+        countryTitle = country.country
+        self.country = country
     }
     
     func getImageCountry(completion: @escaping ([CountryImageItem]?) -> Void) {
-        imageCountryService.getImageCountry() { [weak self] result in
+        imageCountryService.getImageCountry(country: country.country) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let countryInfo):
                     completion(countryInfo)
-                    print(countryInfo)
                 case .failure(let error):
                     completion(nil)
                     self?.showAlert(title: "Error", message: error.localizedDescription, cancelButton: "OK")
                 }
             }
         }
-    }
-    
-    
-    func configure(country: CountryItem) {
-        countryTitle = country.country
-        self.country = country
     }
     
     //MARK: - Получение даты - в одну функцию
