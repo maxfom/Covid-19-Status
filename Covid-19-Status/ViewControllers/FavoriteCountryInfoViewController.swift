@@ -69,20 +69,15 @@ class FavoriteCountryInfoViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         ])
+        self.getImageCountry() { countryInfo in
+            guard let countryInfo = countryInfo else { return }
+            RealmService.saveImageInfo(countryInfo: countryInfo)
+        }
         self.collectionView = collectionView
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.getImageCountry() { countryInfo in
-            guard let countryInfo = countryInfo else { return }
-            RealmService.removeImageInfo()
-            RealmService.saveImageInfo(countryInfo: countryInfo)
-        }
-        
-        
         for period in periods {
             guard let (component, value) = period.dateOffset
             else {
@@ -101,8 +96,6 @@ class FavoriteCountryInfoViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "ImageHeader"
         )
-
-        
     }
     
     func configure(country: CountryItem) {
@@ -116,6 +109,7 @@ class FavoriteCountryInfoViewController: UIViewController {
                 switch result {
                 case .success(let countryInfo):
                     completion(countryInfo)
+                    
                 case .failure(let error):
                     completion(nil)
                     self?.showAlert(title: "Error", message: error.localizedDescription, cancelButton: "OK")

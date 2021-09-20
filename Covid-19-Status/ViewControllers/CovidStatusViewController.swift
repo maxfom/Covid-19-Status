@@ -24,6 +24,12 @@ class CovidStatusViewController: UIViewController {
         df.timeStyle = .none
         return df
     }()
+    private let numberFormatter: NumberFormatter = {
+        let nf = NumberFormatter()
+        nf.generatesDecimalNumbers = true
+        nf.numberStyle = .decimal
+        return nf
+    }()
     
     override func loadView() {
         super.loadView()
@@ -139,7 +145,6 @@ extension CovidStatusViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
-        //status != nil ? status.count : 0
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -152,20 +157,29 @@ extension CovidStatusViewController: UICollectionViewDataSource {
             return status.count
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellStatus", for: indexPath) as! CollectionViewCell
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellStatus", for: indexPath) as! CollectionViewCell
-            var a = "Fuck you, ", b = "lol bot"
-            cell.labelCell.text = a + b
+            switch indexPath.row {
+            case 0:
+                cell.labelCell.text = numberFormatter.string(from: 50000)
+            case 1:
+                cell.labelCell.text = numberFormatter.string(from: 300000)
+            case 2:
+                cell.labelCell.text = numberFormatter.string(from: 10000000)
+            default:
+                cell.labelCell.text = numberFormatter.string(from: 0)
+            }
             cell.layer.borderWidth = 0.5
             cell.backgroundColor = UIColor(red: 102/255, green: 153.0/255, blue: 204.0/255, alpha: 1.0)
+            cell.layer.cornerRadius = 30
             return cell
         }
         else {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellStatus", for: indexPath) as! CollectionViewCell
-            cell.labelCell.text = String(status[indexPath.row].confirmed)
-        return cell
+            cell.labelCell.text = numberFormatter.string(from: NSNumber(value:(status[indexPath.row].confirmed)))
+            //cell.labelCell.text = String(status[indexPath.row].confirmed)
+            return cell
         }
         
     }
@@ -200,7 +214,6 @@ extension CovidStatusViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            //return CGSize(width: collectionView.bounds.size.width - 16, height: 120)
             let width = (view.frame.width - 20) / 3.0
             return CGSize(width: width, height: 120)
         }

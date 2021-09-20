@@ -49,26 +49,26 @@ class ImageCountryService {
     
     
 
-@discardableResult
-func sendRequest(endpoint: Endpoint, parameters: [String: String], completion: @escaping (Result<JSON, Error>) -> Void) -> URLSessionDataTask? {
-    var components = URLComponents()
-    components.scheme = Spec.scheme
-    components.host = Spec.host
-    components.path = endpoint.endpointString
-    let parametersDict = defaultParameters().merging(parameters) { (_, new) in new }
-    components.queryItems = parametersDict.map { key, value in
-        URLQueryItem(name: key, value: value)
-    }
-    guard let url = components.url else {
-        completion(.failure(ImageCountryParsingError.invalidURL))
-        return nil
-    }
-    let request = URLRequest(url: url)
-    let task = networkService.sendRequest(request: request, completion: completion)
-    task.resume()
-    return task
+    @discardableResult
+    func sendRequest(endpoint: Endpoint, parameters: [String: String], completion: @escaping (Result<JSON, Error>) -> Void) -> URLSessionDataTask? {
+        var components = URLComponents()
+        components.scheme = Spec.scheme
+        components.host = Spec.host
+        components.path = endpoint.endpointString
+        let parametersDict = defaultParameters().merging(parameters) { (_, new) in new }
+        components.queryItems = parametersDict.map { key, value in
+            URLQueryItem(name: key, value: value)
+        }
+        guard let url = components.url else {
+            completion(.failure(ImageCountryParsingError.invalidURL))
+            return nil
+        }
+        let request = URLRequest(url: url)
+        let task = networkService.sendRequest(request: request, completion: completion)
+        task.resume()
+        return task
 }
-    
+    @discardableResult
     func getImageCountry(country: String, completion: @escaping (Result<[CountryImageItem], Error>) -> Void) -> URLSessionDataTask? {
         let task = sendRequest(
             endpoint: .statsOfCountry,
