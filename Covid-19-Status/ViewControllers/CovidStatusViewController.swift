@@ -24,10 +24,11 @@ class CovidStatusViewController: UIViewController {
         df.timeStyle = .none
         return df
     }()
-    private let numberFormatter: NumberFormatter = {
-        let nf = NumberFormatter()
+    private let numberFormatter: KNumberFormatter = {
+        let nf = KNumberFormatter()
         nf.generatesDecimalNumbers = true
         nf.numberStyle = .decimal
+        nf.currencySymbol = ""
         return nf
     }()
     
@@ -164,13 +165,13 @@ extension CovidStatusViewController: UICollectionViewDataSource {
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
-                cell.labelCell.text = numberFormatter.string(from: 50000)
+                cell.labelCell.text = numberFormatter.kString(for: 50000)
             case 1:
-                cell.labelCell.text = numberFormatter.string(from: 300000)
+                cell.labelCell.text = numberFormatter.kString(for: 300000)
             case 2:
-                cell.labelCell.text = numberFormatter.string(from: 10000000)
+                cell.labelCell.text = numberFormatter.kString(for: 10000000)
             default:
-                cell.labelCell.text = numberFormatter.string(from: 0)
+                cell.labelCell.text = numberFormatter.kString(for: 0)
             }
             cell.layer.borderWidth = 0.5
             cell.layer.cornerRadius = 30
