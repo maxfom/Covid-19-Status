@@ -29,10 +29,10 @@ class RealmService {
         }
     }
     
-    static func saveImageInfo(countryInfo: [CountryImageItem]) {
+    static func saveImageInfo(countryInfo: CountryImageItem, country: CountryItem) {
         let realm = try! Realm()
         try? realm.write {
-            realm.add(countryInfo, update: .modified)
+            country.previewImage = countryInfo.imageCountry
         }
     }
     

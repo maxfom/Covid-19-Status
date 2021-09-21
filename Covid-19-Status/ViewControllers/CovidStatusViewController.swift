@@ -192,6 +192,7 @@ extension CovidStatusViewController: UICollectionViewDataSource {
         }
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ImageHeader", for: indexPath) as! ImageHeaderCollectionReusableView
+        header.configure(url: URL(string: country.previewImage))
         return header
     }
     

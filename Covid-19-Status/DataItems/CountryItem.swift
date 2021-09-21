@@ -14,6 +14,7 @@ class CountryItem: Object {
     @objc dynamic var slug: String = ""
     @objc dynamic var is02: String = ""
     @objc dynamic var isFavorite: Bool = false
+    @objc dynamic var previewImage: String = ""
     let currentStats = List<StatsCountryItem>()
     
     override class func primaryKey() -> String? {

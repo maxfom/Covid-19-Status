@@ -69,7 +69,7 @@ class ImageCountryService {
         return task
 }
     @discardableResult
-    func getImageCountry(country: String, completion: @escaping (Result<[CountryImageItem], Error>) -> Void) -> URLSessionDataTask? {
+    func getImageCountry(country: String, completion: @escaping (Result<CountryImageItem, Error>) -> Void) -> URLSessionDataTask? {
         let task = sendRequest(
             endpoint: .statsOfCountry,
             parameters: ["query" : country]

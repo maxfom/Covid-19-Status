@@ -55,6 +55,7 @@ class FavoriteCountryInfoViewController: UIViewController {
     var periods = Period.allCases
     var periodCache: [Period: String] = [:]
     var today: String?
+    var imageURL: String?
     
     override func loadView() {
         super.loadView()
@@ -69,11 +70,12 @@ class FavoriteCountryInfoViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         ])
-        self.getImageCountry() { countryInfo in
-            guard let countryInfo = countryInfo else { return }
-            RealmService.saveImageInfo(countryInfo: countryInfo)
-        }
         self.collectionView = collectionView
+        self.getImageCountry() { [weak self] countryInfo in
+            guard let self = self, let countryInfo = countryInfo else { return }
+            RealmService.saveImageInfo(countryInfo: countryInfo, country: self.country)
+            self.collectionView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
@@ -103,7 +105,7 @@ class FavoriteCountryInfoViewController: UIViewController {
         self.country = country
     }
     
-    func getImageCountry(completion: @escaping ([CountryImageItem]?) -> Void) {
+    func getImageCountry(completion: @escaping (CountryImageItem?) -> Void) {
         imageCountryService.getImageCountry(country: country.country) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -161,6 +163,7 @@ extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
         }
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ImageHeader", for: indexPath) as! ImageHeaderCollectionReusableView
+        header.configure(url: URL(string: country.previewImage))
         return header
     }
     
