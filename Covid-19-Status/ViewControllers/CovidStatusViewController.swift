@@ -172,13 +172,15 @@ extension CovidStatusViewController: UICollectionViewDataSource {
                 cell.labelCell.text = numberFormatter.string(from: 0)
             }
             cell.layer.borderWidth = 0.5
-            cell.backgroundColor = UIColor(red: 102/255, green: 153.0/255, blue: 204.0/255, alpha: 1.0)
             cell.layer.cornerRadius = 30
+            cell.layer.masksToBounds = true
             return cell
         }
         else {
             cell.labelCell.text = numberFormatter.string(from: NSNumber(value:(status[indexPath.row].confirmed)))
-            //cell.labelCell.text = String(status[indexPath.row].confirmed)
+            cell.layer.borderWidth = 0
+            cell.layer.cornerRadius = 0
+            cell.layer.masksToBounds = false
             return cell
         }
         
