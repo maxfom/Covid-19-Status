@@ -65,10 +65,11 @@ class CovidStatusViewController: UIViewController {
         self.fromPeriod = fromPeriod
         self.toPeriod = toPeriod
         status = country.currentStats.sorted(byKeyPath: "date", ascending: false)
-        getStatsOfCountry { stats in
+        getStatsOfCountry { [weak self] stats in
             guard let stats = stats else { return }
             DispatchQueue.main.async {
                 RealmService.saveStatsOfCountry(stats, to: country)
+                self?.collectionView.reloadData()
             }
         }
     }
