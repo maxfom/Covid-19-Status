@@ -120,6 +120,7 @@ extension FavoriteCountriesViewController {
         let country = items[indexPath.row]
         guard let vc = storyboard?.instantiateViewController(identifier: "FavoriteCountryInfoViewController") as? FavoriteCountryInfoViewController else { return }
         vc.configure(country: country)
+        RealmService.removeImageInfo()
         show(vc, sender: self)
     }
     

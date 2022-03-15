@@ -9,5 +9,6 @@ target 'Covid-19-Status' do
 
 	pod 'SwiftyJSON'
 	pod 'RealmSwift'
+  pod 'Kingfisher'
 
 end

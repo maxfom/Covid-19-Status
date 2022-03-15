@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FavoriteCountryInfoViewController: UIViewController {
     
@@ -47,15 +48,20 @@ class FavoriteCountryInfoViewController: UIViewController {
     }
     
     var country: CountryItem!
+    var imageCountryService = ImageCountryService()
+    var countryInfo: Results<CountryImageItem> = RealmService.getImageInfo()
     var collectionView: UICollectionView!
     var countryTitle: String = ""
     var periods = Period.allCases
     var periodCache: [Period: String] = [:]
     var today: String?
+    var imageURL: String?
     
     override func loadView() {
         super.loadView()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.bounces = true
+        collectionView.alwaysBounceVertical = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -65,8 +71,12 @@ class FavoriteCountryInfoViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         ])
         self.collectionView = collectionView
+        self.getImageCountry() { [weak self] countryInfo in
+            guard let self = self, let countryInfo = countryInfo else { return }
+            RealmService.saveImageInfo(countryInfo: countryInfo, country: self.country)
+            self.collectionView.reloadData()
+        }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +93,11 @@ class FavoriteCountryInfoViewController: UIViewController {
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        
+        self.collectionView.register(
+            UINib(nibName: "ImageHeaderCollectionReusableView", bundle: nil),
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "ImageHeader"
+        )
     }
     
     func configure(country: CountryItem) {
@@ -91,7 +105,22 @@ class FavoriteCountryInfoViewController: UIViewController {
         self.country = country
     }
     
-    //MARK: - Получение даты - переписать в одну функцию
+    func getImageCountry(completion: @escaping (CountryImageItem?) -> Void) {
+        imageCountryService.getImageCountry(country: country.country) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let countryInfo):
+                    completion(countryInfo)
+                    
+                case .failure(let error):
+                    completion(nil)
+                    self?.showAlert(title: "Error", message: error.localizedDescription, cancelButton: "OK")
+                }
+            }
+        }
+    }
+    
+    //MARK: - Получение даты - в одну функцию
     func getDateWithOffset(byAdding component: Calendar.Component, value: Int) -> String {
         let today = Date()
         let week = Calendar.current.date(byAdding: component, value: value, to: today)
@@ -106,11 +135,18 @@ class FavoriteCountryInfoViewController: UIViewController {
 extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return periods.count
+        switch section {
+        case 0:
+            return 0
+        case 1:
+            return periods.count
+        default:
+            return periods.count
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -119,12 +155,25 @@ extension FavoriteCountryInfoViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              indexPath.section == 0
+        else {
+            return UICollectionReusableView()
+        }
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ImageHeader", for: indexPath) as! ImageHeaderCollectionReusableView
+        header.configure(url: URL(string: country.previewImage))
+        return header
+    }
+    
 }
 
 extension FavoriteCountryInfoViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(identifier: "CovidStatusViewController") as? CovidStatusViewController else { return }
+        guard indexPath.section > 0 else { return }
         if today == nil {
             today = getDateWithOffset(byAdding: .day, value: -1)
         }
@@ -142,9 +191,10 @@ extension FavoriteCountryInfoViewController: UICollectionViewDelegateFlowLayout 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: collectionView.bounds.size.width - 16, height: 120)
+        let width = (view.frame.width - 20) / 2.0
+        return CGSize(width: width, height: 120)
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -162,4 +212,12 @@ extension FavoriteCountryInfoViewController: UICollectionViewDelegateFlowLayout 
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8)
     }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            return CGSize(width: collectionView.bounds.width, height: 200)
+        }
+        return .zero
+    }
+    
 }
